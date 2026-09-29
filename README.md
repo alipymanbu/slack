@@ -1,124 +1,27 @@
-Slack API in Go [![Go Reference](https://pkg.go.dev/badge/github.com/slack-go/slack.svg)](https://pkg.go.dev/github.com/slack-go/slack) [![CI](https://github.com/slack-go/slack/actions/workflows/test.yml/badge.svg)](https://github.com/slack-go/slack/actions/workflows/test.yml)
-===============
+# slack
 
-You can chat with us on the [#slack-go](https://gophers.slack.com/archives/C02JQ98JHNC), [#slack-go-ja](https://gophers.slack.com/archives/C02HNL8EN3H) Slack channel on the [Gophers Slack](https://gophers.slack.com).
+本仓库是「slack」的安卓版本获取入口，附使用资料索引。
 
-![logo](logo.png "icon")
+## 安装文件资源（夸克网盘）
 
-This library supports most if not all of the `api.slack.com` REST
-calls, as well as the Real-Time Messaging protocol over websocket, in
-a fully managed way.
+> **slack 安装文件资源（夸克网盘）**：[https://pan.quark.cn/s/ad74026e3cf4](https://pan.quark.cn/s/ad74026e3cf4)
 
-## Project Status
-There is currently no major version released.
-Therefore, minor version releases may include backward incompatible changes.
+## 官方项目
 
-See [Releases](https://github.com/slack-go/slack/releases) for more information about the changes.
+- 上游项目：[slack-go/slack](https://github.com/slack-go/slack)
 
-## Go Versions supported
+## 更多资料
 
-We support the same versions of Go as the officially supported Go versions (see [Go
-Release Policy](https://go.dev/doc/devel/release#policy)).
+- [下载与安装教程](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.md)
+- [免费版功能限制](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E5%85%8D%E8%B4%B9%E7%89%88%E5%8A%9F%E8%83%BD%E9%99%90%E5%88%B6.md)
+- [注册登录与加入工作区](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E6%B3%A8%E5%86%8C%E7%99%BB%E5%BD%95%E4%B8%8E%E5%8A%A0%E5%85%A5%E5%B7%A5%E4%BD%9C%E5%8C%BA.md)
+- [消息搜索技巧](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E6%B6%88%E6%81%AF%E6%90%9C%E7%B4%A2%E6%8A%80%E5%B7%A7.md)
+- [消息编辑与删除](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E6%B6%88%E6%81%AF%E7%BC%96%E8%BE%91%E4%B8%8E%E5%88%A0%E9%99%A4.md)
+- [登录不上怎么排查](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E7%99%BB%E5%BD%95%E4%B8%8D%E4%B8%8A%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5.md)
+- [通知设置与问题排查](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E9%80%9A%E7%9F%A5%E8%AE%BE%E7%BD%AE%E4%B8%8E%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5.md)
+- [频道与私信使用技巧](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/slack/%E9%A2%91%E9%81%93%E4%B8%8E%E7%A7%81%E4%BF%A1%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7.md)
+- [全部软件目录](https://github.com/alipymanbu/Android/blob/master/%E5%85%A8%E9%83%A8%E8%BD%AF%E4%BB%B6%E7%9B%AE%E5%BD%95.md)
 
-## Installing
+---
 
-### *go get*
-
-```bash
-go get -u github.com/slack-go/slack
-```
-
-## Example
-
-### Getting all groups
-
-```golang
-import (
-    "fmt"
-
-    "github.com/slack-go/slack"
-)
-
-func main() {
-    api := slack.New("YOUR_TOKEN_HERE")
-    // If you set debugging, it will log all requests to the console
-    // Useful when encountering issues
-    // slack.New("YOUR_TOKEN_HERE", slack.OptionDebug(true))
-    groups, err := api.GetUserGroups(slack.GetUserGroupsOptionIncludeUsers(false))
-    if err != nil {
-        fmt.Printf("%s\n", err)
-        return
-    }
-    for _, group := range groups {
-        fmt.Printf("ID: %s, Name: %s\n", group.ID, group.Name)
-    }
-}
-```
-
-### Getting User Information
-
-```golang
-import (
-    "fmt"
-
-    "github.com/slack-go/slack"
-)
-
-func main() {
-    api := slack.New("YOUR_TOKEN_HERE")
-    user, err := api.GetUserInfo("U023BECGF")
-    if err != nil {
-        fmt.Printf("%s\n", err)
-        return
-    }
-    fmt.Printf("ID: %s, Fullname: %s, Email: %s\n", user.ID, user.Profile.RealName, user.Profile.Email)
-}
-```
-
-### HTTP retries
-
-Retries are off by default. Use **OptionRetry(n)** for 429-only retries, or **OptionRetryConfig(cfg)** for full control (connection, 429, opt-in 5xx). With a custom client, pass retry options after `OptionHTTPClient`. See package `slack` doc for handler details.
-
-```golang
-api := slack.New("YOUR_TOKEN_HERE", slack.OptionRetry(3))
-```
-
-## Minimal Socket Mode usage:
-
-See https://github.com/slack-go/slack/blob/master/examples/socketmode/socketmode.go
-
-
-## Minimal RTM usage:
-
-As mentioned in https://api.slack.com/rtm - for most applications, Socket Mode is a better way to communicate with Slack.
-
-See https://github.com/slack-go/slack/blob/master/examples/websocket/websocket.go
-
-
-## Minimal EventsAPI usage:
-
-See https://github.com/slack-go/slack/blob/master/examples/eventsapi/events.go
-
-## Socketmode Event Handler (Experimental)
-
-When using socket mode, dealing with an event can be pretty lengthy as it requires you to route the event to the right place.
-
-Instead, you can use `SocketmodeHandler` much like you use an HTTP handler to register which event you would like to listen to and what callback function will process that event when it occurs.
-
-See [./examples/socketmode_handler/socketmode_handler.go](./examples/socketmode_handler/socketmode_handler.go)
-## Contributing
-
-You are more than welcome to contribute to this project.  Fork and
-make a Pull Request, or create an Issue if you see any problem.
-
-Before making any Pull Request please run the following:
-
-```
-make pr-prep
-```
-
-This will check/update code formatting, linting and then run all tests
-
-## License
-
-BSD 2 Clause license
+> 本仓库由上游项目 fork 而来，原始说明见[上游仓库](https://github.com/slack-go/slack)。
